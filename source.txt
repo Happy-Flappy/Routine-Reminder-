@@ -1,0 +1,3 @@
+DAILY "exercise"
+WEEKLY "mow the grass"
+DAILY "practice scenery drawing"
