@@ -184,7 +184,7 @@ int main()
 	
 	
 	std::chrono::duration<int> reminderTime;
-	float reminderRate = 0.05;
+	float reminderRate = 30;
 	if(reminderRate < 1)
 		reminderTime = seconds(static_cast<int>(reminderRate * 60));
 	else	
