@@ -1,0 +1,5 @@
+DELAY 30 
+ACTORSIZE 250 250
+DAILY "exercise"
+DAILY "do the dishes"
+WEEKLY "burn the garbage"

@@ -1,35 +1,28 @@
 ## C++ Routine Reminder
+
+<video src="./Recording.mp4" controls="controls" style="max-width: 100%;">
+  Your browser does not support this video tag.
+</video>
+
 ### The Purpose
-- Routine Reminder is your silly computer bot that will nag you every half hour until you get some work done.
-- You can write in the source.txt file what tasks must be completed and in what time frame.
+- Routine Reminder is your silly computer bot that will nag you until you get some work done.
+- You can write in the source.txt file what tasks must be completed, in what time frame, and how often reminders should be given. 
 - Time frames can be DAILY or WEEKLY. If marked as DAILY, the program will nag you for that same task the next day.
 - If marked as WEEKLY, the program will only nag you until you get the task done for the week.
+
+### TrayIcon Interface
+
+![TrayIcon Preview](trayPreview.png)
+
 ### Example:
 ```
+> Sets a delay between reminders - 30 minutes
+DELAY 30 
+> Sets the size of one frame of the actor spritesheet.(You can provide your own actor graphics.)
+ACTORSIZE 250 250
+> Reminds you of this task until you get it done for that day. It will ask again the next day.
 DAILY "exercise"
-WEEKLY "mow the grass"
-DAILY "practice scenery drawing"
+DAILY "do the dishes"
+> Reminds you of this task until you get it done for that week. It will ask again the next week.
+WEEKLY "burn the garbage"
 ```
-> Note: Changing either the source.txt or clearing the reminder_state.txt will result in the program asking again about everything.
-
-## Previews
-![preview](previews/0.png?raw=true)
-
-![preview](previews/1.png?raw=true)
-
-![preview](previews/2.png?raw=true)
-
-![preview](previews/3.png?raw=true)
-
-![preview](previews/4.png?raw=true)
-
-![preview](previews/5.png?raw=true)
-
-![preview](previews/6.png?raw=true)
-
-![preview](previews/7.png?raw=true)
-
-![preview](previews/8.png?raw=true)
-
-![preview](previews/9.png?raw=true)
-

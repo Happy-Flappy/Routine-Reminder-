@@ -1,0 +1,1 @@
+g++ -o bin/main.exe src/main.cpp -lgdi32 -lgdiplus -luser32 -lole32 -lcomctl32 -luuid -lcomdlg32 -lshell32 -static -std=c++20 -mwindows
