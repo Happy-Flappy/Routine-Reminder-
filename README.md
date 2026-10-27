@@ -1,8 +1,6 @@
 ## C++ Routine Reminder
 
-<video src="./Recording.mp4" controls="controls" style="max-width: 100%;">
-  Your browser does not support this video tag.
-</video>
+![Screen Recording](Recording.gif)
 
 ### The Purpose
 - Routine Reminder is your silly computer bot that will nag you until you get some work done.
