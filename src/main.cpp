@@ -119,16 +119,17 @@ int main()
 				}
 				continue;
 			}
-			if(actor.gotYes)
+			if(!reminders.empty() && current < (int)reminders.size() && !reminders[current].done)
 			{
-				if(!reminders.empty() && current < (int)reminders.size() && !reminders[current].done)
+				//if you get any answer at all, progress to next question. If yes, then save that.
+				if(actor.gotYes)
 				{
 					reminders[current].done = true;
 					saveState(reminders, storedDate, storedWeekStart);
-					current = (current + 1) % reminders.size();
 				}
-				continue;				
-			}				
+				current = (current + 1) % reminders.size();
+			}
+			continue;			
 			
 		}
         auto now = steady_clock::now();

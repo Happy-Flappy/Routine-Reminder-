@@ -213,7 +213,7 @@ class Actor
 				std::string v = (hideWhenInactive) ? "Invisible." : "Visible.";
 				std::string message = "Toggled Sleeping to " + v;
 				
-				ws::Balloon(window,message,"Routine Reminder",icon);
+				ws::Balloon(message,"Routine Reminder",icon);
 			}
 			if(res == 2)//edit task list
 			{
@@ -227,7 +227,7 @@ class Actor
 				HINSTANCE result = ShellExecute(NULL,L"open",wfile.c_str(),NULL,wfolder.c_str(),SW_SHOWNORMAL);
 				
 				if((INT_PTR)result <= 32)
-					ws::Balloon(window,"Failed to open tasks source file called (sources.txt)","Routine Reminder",icon);
+					ws::Balloon("Failed to open tasks source file called (sources.txt)","Routine Reminder",icon);
 			}
 			if(res == 3)//Restart All Tasks
 			{
@@ -238,11 +238,11 @@ class Actor
 				
 				//save empty state, then get from source - if source is different than this new state, it will use the source.
 				if(!saveState(reminders,storedDate,storedWeekStart) || !loadState(reminders,size))
-					ws::Balloon(window,"Failed to restart all tasks. Could not locate or edit reminders_state.txt!","Routine Reminder",icon);
+					ws::Balloon("Failed to restart all tasks. Could not locate or edit reminders_state.txt!","Routine Reminder",icon);
 				
 				sleeping = true;
 				sprite.setTextureRect({0,0,size.x,size.y});
-				tray.showBalloon("Restarted All Tasks","Routine Reminder");
+				ws::Balloon("Restarted All Tasks","Routine Reminder",icon);
 			}
 			if(res == 4)//Quit Program
 			{

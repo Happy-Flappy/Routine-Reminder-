@@ -11,7 +11,7 @@
 
 #include <thread>
 
-//Controls Linking: -lcomctl32 -lcomdlg32
+//Controls Linking: -lcomctl32 -lcomdlg32 -lshell32 -luuid
 
 //automated linking for visual studio MSVC
 #ifdef _MSC_VER
@@ -521,7 +521,8 @@ namespace ws
 		std::vector<std::string> pendingItems;
     };	
 
-	bool Balloon(ws::Window& window, std::string message, std::string title, HICON hIcon, DWORD messageIconType = NIIF_USER, int timeoutMilliseconds = 5000, DWORD styles = NIF_ICON | NIF_TIP | NIF_MESSAGE);
+	bool Balloon(std::string message,std::string title,HICON hIcon,DWORD messageIconType = NIIF_USER,int timeoutMilliseconds = 5000,DWORD styles = NIF_ICON | NIF_TIP | NIF_INFO);
+	
 	
 	class TrayIcon
 	{
@@ -2015,42 +2016,42 @@ namespace ws
 		return hwnd ? (int)SendMessage(hwnd, LB_GETCOUNT, 0, 0) : 0;
 	}
 
-	bool Balloon(ws::Window& window, std::string message, std::string title, HICON hIcon, DWORD messageIconType, int timeoutMilliseconds, DWORD styles) {
+
+	bool Balloon(std::string message,std::string title,HICON hIcon,DWORD messageIconType,int timeoutMilliseconds,DWORD styles)
+	{
 		NOTIFYICONDATA nid = {};
 		ZeroMemory(&nid, sizeof(nid));
 		nid.cbSize = sizeof(nid);
-		nid.hWnd = window.hwnd;
-		static int BalloonID = 0x1000; //avoid an id that could collide with trayicons.
-		nid.uID = BalloonID++;
-
-		nid.uFlags = styles;
-		nid.uCallbackMessage = WM_APP + 0x42;
-		nid.hIcon = hIcon;
-		wcscpy_s(nid.szTip, ws::toUTF16(title).c_str());
-
-		if (!Shell_NotifyIcon(NIM_ADD, &nid))
-			return false;
-
-		//now trigger the balloon.
+		nid.hWnd = GetDesktopWindow();
+		static int BalloonID = 0;
+		nid.uID = BalloonID++;	
 		
-		nid.uFlags        = NIF_INFO;
-		nid.dwInfoFlags   = messageIconType;
-		nid.hBalloonIcon  = hIcon;
-		wcscpy_s(nid.szInfo,      ws::toUTF16(message).c_str());
+		nid.uFlags = styles;
+		nid.hIcon = hIcon;
+		wcscpy_s(nid.szTip, ws::toUTF16(title).c_str());	
+		
+		if(!Shell_NotifyIcon(NIM_ADD, &nid))
+			return false;
+		
+		
+		nid.dwInfoFlags = messageIconType;
+		wcscpy_s(nid.szInfo,ws::toUTF16(message).c_str());
 		wcscpy_s(nid.szInfoTitle, ws::toUTF16(title).c_str());
-		nid.uTimeout      = timeoutMilliseconds;
-
-		if (!Shell_NotifyIcon(NIM_MODIFY, &nid)) {
+		nid.uTimeout = timeoutMilliseconds; 
+		
+		if(!Shell_NotifyIcon(NIM_MODIFY, &nid)) 
+		{
 			Shell_NotifyIcon(NIM_DELETE, &nid);
 			return false;
 		}
-
-		ws::Timer timer;
-		window.addMessageHandler([timer, timeoutMilliseconds, nid](MSG) mutable -> LRESULT {
+		
+		
+		/* ws::Timer timer;
+		window.addMessageHandler([timer,timeoutMilliseconds,nid](MSG msg) mutable -> HRESULT{
 			if(timer.getMilliSeconds() >= timeoutMilliseconds)
 				Shell_NotifyIcon(NIM_DELETE, &nid);
 			return 0;
-		});
+		}); */
 		return true;
 	}
 
